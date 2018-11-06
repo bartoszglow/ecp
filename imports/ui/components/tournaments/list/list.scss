@@ -1,0 +1,9 @@
+.ecp__tournaments-list {}
+
+.ecp__tournament-row {
+  cursor: pointer;
+
+  &:hover {
+    background-color: #333;
+  }
+}

@@ -1,0 +1,148 @@
+$body-bg: #000;
+$body-color: #fff;
+$blue: #31a3c3;
+$table-dark-color: #fff;
+$jumbotron-bg: #212529;
+
+@import "{}/node_modules/bootstrap/scss/bootstrap";
+
+body {
+  min-height: 100%;
+  padding-bottom: 30px;
+}
+
+table {
+  border-radius: 10px;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.jumbotron {
+  background: #212529;
+  border-radius: 10px;
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+
+hr {
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.ecp__body {
+  padding-top: 100px;
+}
+
+.ecp__header {
+  position: fixed;
+  height: 70px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.8);
+  z-index: 9999;
+
+  &-body {
+    max-width: 1140px;
+    width: 100%;
+    height: 100%;
+    padding: 4px 15px;
+  }
+}
+
+.ecp__logo {
+  color: black;
+  text-transform: uppercase;
+  display: block;
+  float: left;
+
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  &-top {
+    font-size: 32px;
+    color: #fff;
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: -10px;
+      height: 30px;
+      width: 2px;
+      background: #fff;
+      pointer-events: none;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: -10px;
+      height: 2px;
+      width: 50px;
+      background: #fff;
+      pointer-events: none;
+    }
+  }
+
+  &-bottom {
+    position: relative;
+    top: -10px;
+    font-size: 10px;
+    color: #31a3c3;
+    font-weight: bold;
+
+    &:before {
+      content: '';
+      position: absolute;
+      bottom: -7px;
+      right: -10px;
+      height: 30px;
+      width: 2px;
+      background: #fff;
+      pointer-events: none;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -7px;
+      right: -10px;
+      height: 2px;
+      width: 50px;
+      background: #fff;
+      pointer-events: none;
+    }
+  }
+
+  &:before {
+    
+  }
+}
+
+.ecp__menu {
+  list-style: none;
+  float: right;
+  padding: 0;
+  margin: 0 -40px;
+
+  &-item {
+    line-height: 60px;
+    margin: 0 40px;
+    float: left;
+
+    &-link {
+      color: #fff;
+      transition: color .2s;
+
+      &:hover {
+        color: lightgrey;
+        text-decoration: none;
+      }
+    }
+  }
+}

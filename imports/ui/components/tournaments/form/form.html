@@ -1,0 +1,38 @@
+<template name="tournamentsForm">
+    <form class="new-tournament">
+        <div class="jumbotron">
+            <h3>Tournament info</h3>
+            <div class="form-group">
+                <input type="text" class="form-control" name="title" placeholder="Title" required />
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="description" placeholder="description" required />
+            </div>
+            <div class="form-group">
+                <label>Tournament points calculation algorithm</label>
+                <select class="form-control" name="calculationsType">
+                    <option value="battle">battle</option>
+                    <option value="cup">cup</option>
+                </select>
+            </div>
+            <hr class="my-4">
+            <h3> Battles (level names) </h3>
+            <ul class="list-group">
+                {{#each battles}}
+                    <li class="list-group-item ecp__battle-input">
+                        <input type="text" class="input-battles form-control" name="battle-{{@index}}" data-index={{@index}} value={{this}} />
+                        <button class="btn btn-danger" data-index={{@index}}>-</button>
+                    </li>
+                {{/each}}
+                <li class="list-group-item">
+                    <div style="margin-left: 40%; width: 20%; margin-top: 20px;">
+                        <a class="btn btn-success btn-block add-battle" href="#" role="button">Add battle</a>
+                    </div>
+                </li>
+            </ul>
+            <div style="margin-left: 40%; width: 20%; margin-top: 40px;">
+                <button type="submit" class="btn btn-primary btn-block">Submit tournament</button>
+            </div>
+        </div>
+    </form>
+</template>

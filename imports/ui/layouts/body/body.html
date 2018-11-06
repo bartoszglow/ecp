@@ -1,0 +1,29 @@
+<template name="App_body">
+  <header class="ecp__header">
+    <div class="ecp__header-body">
+      <a href="/" class="ecp__logo">
+        <div class="ecp__logo-top">Eol Cup</div>
+        <div class="ecp__logo-bottom">Pro tournament tool</div>
+      </a>
+      <ul class="ecp__menu">
+        <li class="ecp__menu-item">
+          <a href="/" class="ecp__menu-item-link">News</a>
+        </li>
+        <li class="ecp__menu-item">
+          <a href="/tournaments" class="ecp__menu-item-link">Tournaments</a>
+        </li>
+        <li class="ecp__menu-item">
+          <a href="/" class="ecp__menu-item-link">Battles</a>
+        </li>
+        <li class="ecp__menu-item">
+          <a href="/" class="ecp__menu-item-link">
+            <i class="fas fa-user"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+  <div class="container ecp__body">
+    {{> Template.dynamic template=main}}
+  </div>
+</template>

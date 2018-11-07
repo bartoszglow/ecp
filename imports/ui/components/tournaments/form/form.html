@@ -3,10 +3,20 @@
         <div class="jumbotron">
             <h3>Tournament info</h3>
             <div class="form-group">
+                <label>Title</label>
                 <input type="text" class="form-control" name="title" placeholder="Title" required />
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" name="description" placeholder="description" required />
+                <label>Description</label>
+                <textarea type="text" class="form-control" name="description" placeholder="My best tournament ever!" rows="3" required></textarea> 
+            </div>
+            <div class="form-group">
+                <label>Author</label>
+                <input type="text" class="form-control" name="author" placeholder="kuski" required />
+            </div>
+            <div class="form-group">
+                <label>Starting date</label>
+                <input type="datetime-local" class="form-control" name="startingDate" placeholder="starting date" required />
             </div>
             <div class="form-group">
                 <label>Tournament points calculation algorithm</label>

@@ -19,19 +19,21 @@ Template.tournamentsForm.events({
     event.preventDefault();
 
     // Get value from form element
-    const { title, description, calculationsType } = event.target;
+    const { title, description, author, startingDate, calculationsType } = event.target;
 
     title.value;
 
     Meteor.call('tournaments.insert', {
       title: title.value,
       description: description.value,
+      author: author.value,
+      startingDate: startingDate.value,
       battles: template.data.battles.get(),
       calculationsType: calculationsType.value,
       createdAt: new Date(),
     }, (error, result) => {
       if(!error) {
-        FlowRouter.go("/");
+        FlowRouter.go("/tournament/" + result);
       }
     });
   },

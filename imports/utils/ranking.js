@@ -2,7 +2,7 @@ const createRanking = function({battles, calculationsType}) {
   let players = [];
 
   battles.forEach(battle => {
-    if(battle.results && !battle.results.error) {
+    if(battle && battle.results && !battle.results.error) {
       const results = Object.entries(battle.results);
 
       results && results.forEach(([key, result]) => {

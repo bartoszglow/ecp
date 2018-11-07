@@ -21,8 +21,6 @@ Template.tournamentsForm.events({
     // Get value from form element
     const { title, description, author, startingDate, calculationsType } = event.target;
 
-    title.value;
-
     Meteor.call('tournaments.insert', {
       title: title.value,
       description: description.value,

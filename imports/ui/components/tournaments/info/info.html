@@ -4,7 +4,11 @@
         <hr class="my-4">
         <p class="lead">{{description}}</p>
         <hr class="my-4">
+        <p class="lead">Author: {{author}}</p>
+        <hr class="my-4">
         <p class="lead">Status: {{status}}</p>
+        <hr class="my-4">
+        <p class="lead">Starting date: {{formatDate startingDate}}</p>
         <hr class="my-4">
         {{#each battles}}
           {{#with getBattle this}}

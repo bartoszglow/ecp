@@ -11,7 +11,10 @@ Template.tournamentsList.onCreated(function () {
 
 Template.tournamentsList.helpers({
   tournaments() {
-    return Tournaments.find({});
+    const tournaments = Tournaments.find({}).fetch();
+    const sortedTournaments = tournaments && tournaments.sort((a, b) => a.startingDate || a.createdAt > b.startingDate || b.createdAt ? 1 : -1);
+
+    return sortedTournaments && [...sortedTournaments.filter(t => t.status !== 'finished'), ...sortedTournaments.filter(t => t.status === 'finished')];
   },
   getNumberOfPlayers(tournament) {
     return tournament.ranking && tournament.ranking.length;

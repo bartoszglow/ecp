@@ -7,11 +7,12 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Title</th>
+          <th scope="col">Author</th>
           <th scope="col">Players</th>
           <th scope="col">Battles</th>
           <th scope="col">Leader</th>
           <th scope="col">Status</th>
-          <th scope="col">Created</th>
+          <th scope="col">Starting date</th>
         </tr>
       </thead>
       <tbody>
@@ -19,11 +20,12 @@
           <tr class="ecp__tournament-row" data-tournament-id={{_id}}>
             <td>{{inc @index}}</td>
             <td>{{title}}</td>
+            <td>{{author}}</td>
             <td>{{getNumberOfPlayers this}}</td>
             <td>{{getNumberOfBattles this}}</td>
             <td>{{getLeader this}}</td>
             <td>{{status}}</td>
-            <td>{{formatDate createdAt}}</td>
+            <td>{{formatDate startingDate}}</td>
           </tr>
         {{/each}}
       </tbody>

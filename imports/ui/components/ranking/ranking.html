@@ -1,25 +1,62 @@
 <template name="tournamentsRanking">
-  <h2 style="margin: 20px 0;">RANKING</h2>
-  <table class="table table-dark">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Player</th>
-        <th scope="col">Points</th>
-        {{#unless onlyOneLevDisplayed}}<th scope="col">Played</th>{{/unless}}
-        {{#if onlyOneLevDisplayed}}<th scope="col">Time</th>{{/if}}
-      </tr>
-    </thead>
-    <tbody>
-      {{#each players}}
+  {{#let activeBattle=getActiveBattle}}
+    {{#if activeBattle}}
+      <h2 style="margin: 40px 0 20px;">{{activeBattle.levelname}} level info</h2>
+      <div class="jumbotron" style="overflow: hidden;">
+          {{#if isInfoAboutBattle activeBattle}}
+              <div class="row">
+                  <div class="col-md-4">
+                      <p class="lead">Author: {{activeBattle.kuski}}</p>
+                      <p class="lead">Status: {{getBattleStatus activeBattle}}</p>
+                      <p class="lead">Type: {{activeBattle.type}}</p>
+                      <p class="lead">Duration: {{activeBattle.duration}} mins</p>
+                      <p class="lead mb-0">Start date: {{#unless activeBattle.inqueue}} {{formatDateFromUnix activeBattle.started}} {{/unless}}</p>
+                  </div>
+                  <div class="col-md-8 text-right" style="margin-top: -20px; margin-right: -32px; margin-left: 32px; margin-bottom: -30px;">
+                      <img src="http://elmaonline.net/images/map/{{activeBattle.level}}/600/600" alt="" style="height: 264px; max-width: 100%;">
+                  </div>
+              </div>
+          {{else}}
+              <div class="text-center">
+                  <p class="lead mb-0">Status: level has not been started or queued yet!</p>
+              </div>
+          {{/if}}
+      </div>
+    {{/if}}
+
+    <h2 style="margin: 40px 0 20px;">Ranking {{#if activeBattle}}of {{activeBattle.levelname}}{{/if}}</h2>
+    <table class="table table-dark">
+      <thead>
         <tr>
-          <td>{{inc @index}}</td>
-          <td>{{name}}</td>
-          <td>{{points}}</td>
-          {{#unless onlyOneLevDisplayed}}<td>{{played}}</td>{{/unless}}
-          {{#if onlyOneLevDisplayed}}<td>{{time}}</td>{{/if}}
+          <th scope="col">#</th>
+          <th scope="col">Player</th>
+          <th scope="col">Points</th>
+          {{#unless activeBattle}}<th scope="col">Played</th>{{/unless}}
+          {{#if activeBattle}}<th scope="col">Time</th>{{/if}}
         </tr>
-      {{/each}}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {{#each players}}
+          <tr>
+            <td>{{inc @index}}</td>
+            <td>{{name}}</td>
+            <td>{{points}}</td>
+            {{#unless activeBattle}}<td>{{played}}</td>{{/unless}}
+            {{#if activeBattle}}
+              <td>
+                {{#if isFirstIndex @index}}
+                  <a href="http://elmaonline.net/downloads/brec/{{activeBattle.index}}" class="mr-2">{{time}}</a>
+                  <a href="http://elmaonline.net/downloads/recplayer/{{activeBattle.index}}/{{activeBattle.level}}" target="_blank">
+                    <i class="fas fa-tv"></i>
+                  </a>
+                {{else}}
+                  {{time}}
+                {{/if}}
+              </td>
+            {{/if}}
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{/let}}
 </template>

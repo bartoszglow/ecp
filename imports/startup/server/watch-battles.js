@@ -20,7 +20,7 @@ Meteor.startup(() => {
               if(tournamentBattle.levelName && battle.levelname && tournamentBattle.levelName.toLowerCase() === battle.levelname.toLowerCase()) {
                 fetchBattleResults(battle.index).then((results) => {
                   if(results) {
-                    Battles.update(tournamentBattle._id, { $set: { results } });
+                    Battles.update(tournamentBattle._id, { $set: Object.assign({}, battle, { results }) });
 
                     const tournament = Tournaments.findOne(tournamentBattle.tournamentId);
 

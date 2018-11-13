@@ -9,3 +9,6 @@ Template.registerHelper("formatDate", function(value, options) {
   return moment(value).format("DD MMM YY, HH:mm");
 });
 
+Template.registerHelper("formatDateFromUnix", function(value, options) {
+  return moment((value - 9 * 60 * 60) * 1000).format("DD MMM YY, HH:mm");
+});

@@ -1,0 +1,26 @@
+.menu-user {
+  position: relative;
+}
+
+.menu-user-popup {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 270px;
+  padding: 0 15px 5px;
+  background: white;
+  border-radius: 2px;
+
+  p {
+    color: gray;
+    margin: 0;
+    text-align: center;
+  }
+
+  .btn {
+    display: block;
+    width: 100%;
+    border-top: 1px solid gray;
+    text-align: center;
+  }
+}

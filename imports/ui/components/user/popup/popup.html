@@ -1,0 +1,18 @@
+<template name="userPopup">
+  <li class="ecp__menu-item menu-user">
+    <a href="/login" class="ecp__menu-item-link menu-user-toggle-popup">
+      <i class="fas fa-user"></i>
+    </a>
+    {{#if isUserPopupVisibleHandler}}
+      <div class="menu-user-popup">
+        {{#if isUserLoggedIn}}
+          <p>You're logged in as: {{ getUserName }}</p>
+          <button type="button" name="button" class="btn btn-unstyled menu-user-logout">logout</button>
+        {{else}}
+          <p>You are not logged in!</p>
+          <a href="/login" role="button" class="btn btn-unstyled menu-user-login">login</a>
+        {{/if}}
+      </div>
+    {{/if}}
+  </li>
+</template>

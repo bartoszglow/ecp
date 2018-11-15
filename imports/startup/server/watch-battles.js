@@ -17,7 +17,7 @@ Meteor.startup(() => {
         tournamentBattles.forEach(tournamentBattle => {
           if(!tournamentBattle.results || !!tournamentBattle.results.error) {
             battles.forEach(battle => {
-              if(tournamentBattle.levelName && battle.levelname && tournamentBattle.levelName.toLowerCase() === battle.levelname.toLowerCase()) {
+              if(compareBattles(tournamentBattle, battle)) {
                 fetchBattleResults(battle.index).then((results) => {
                   if(results) {
                     Battles.update(tournamentBattle._id, { $set: Object.assign({}, battle, { results }) });
@@ -47,3 +47,7 @@ Meteor.startup(() => {
     });
   }, 5000);
 });
+
+const compareBattles = (battle1, battle2) => {
+  return battle1.levelName && battle2.levelname && (battle1.levelName.toLowerCase() === battle2.levelname.toLowerCase())
+}

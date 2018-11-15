@@ -18,7 +18,13 @@
         <hr class="my-4">
         {{#each battles}}
             {{#with getBattle this}}
-                <button class="btn btn-primary {{#if battleFinished this}} btn-success {{/if}} {{#if battleInProgress this}} btn-warning {{/if}} {{#if isBattleActive _id}} active {{/if}} choose-battle" data-battle-id="{{_id}}">{{levelName}}</button>
+                <button class="btn btn-primary {{#if battleFinished this}} btn-success {{/if}} {{#if battleInProgress this}} btn-warning {{/if}} {{#if isBattleActive _id}} active {{/if}} choose-battle" data-battle-id="{{_id}}">
+                  {{#if battleFinished this}}
+                      {{levelName}}
+                  {{else}}
+                      battle-{{@index}}
+                  {{/if}}
+                </button>
             {{/with}}
         {{/each}}
     </div>

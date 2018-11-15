@@ -20,7 +20,7 @@ Template.tournamentsInfo.helpers({
 });
 
 Template.tournamentsInfo.events({
-  'click .choose-battle'(event) {
+  'click .choose-battle.btn-success'(event) {
     const battleId = event.currentTarget.dataset.battleId;
     const queryBattleId = FlowRouter.getQueryParam('battle');
     FlowRouter.setQueryParams({ battle: queryBattleId === event.currentTarget.dataset.battleId ? null : battleId });

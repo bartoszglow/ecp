@@ -10,21 +10,40 @@
                 <label>Description</label>
                 <textarea type="text" class="form-control" name="description" placeholder="My best tournament ever!" rows="3" required></textarea> 
             </div>
-            <div class="form-group">
-                <label>Author</label>
-                <input type="text" class="form-control" name="author" placeholder="kuski" required />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Author</label>
+                        <input type="text" class="form-control" name="author" placeholder="kuski" required />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Starting date (format: "dd.mm.rrrr, --:--")</label>
+                        <input type="datetime-local" class="form-control" name="startingDate" placeholder="starting date" required />
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Starting date</label>
-                <input type="datetime-local" class="form-control" name="startingDate" placeholder="starting date" required />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Tournament points calculation algorithm</label>
+                        <select class="form-control" name="calculationsType">
+                            <option value="battle">battle</option>
+                            <option value="cup">cup</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Number of worst levs to not count in final results</label>
+                        <input type="number" min="0" max="10" class="form-control" name="numberOfLevsToSkip" placeholder="0" required />
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Tournament points calculation algorithm</label>
-                <select class="form-control" name="calculationsType">
-                    <option value="battle">battle</option>
-                    <option value="cup">cup</option>
-                </select>
-            </div>
+
             <hr class="my-4">
             <h3> Battles (level names) </h3>
             <ul class="list-group">

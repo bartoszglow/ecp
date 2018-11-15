@@ -1,6 +1,7 @@
-const createRanking = function({battles, calculationsType}) {
+const createRanking = function({battles, calculationsType, numberOfLevsToSkip = 0}) {
   let players = [];
 
+  // Construct players array with array of battle results for each
   battles.forEach(battle => {
     if(battle && battle.results && !battle.results.error) {
       const results = Object.entries(battle.results);
@@ -14,18 +15,47 @@ const createRanking = function({battles, calculationsType}) {
         });
 
         if(index > -1) {
-          players[index].points = players[index].points + pointsToGrant;
-          players[index].played = players[index].played + 1;
+          players[index].results.push({
+            battle: battle.index,
+            points: pointsToGrant,
+            time: result.time,
+          });
         } else {
           players.push({
             name: result.kuski,
-            points: pointsToGrant,
-            time: result.time,
-            played: 1
+            results: [{
+              battle: battle.index,
+              points: pointsToGrant,
+              time: result.time,
+            }]
           });
         }
       });
     }
+  });
+
+  players.forEach(player => {
+    // Sort results by points
+    const resultsSorted = player.results.slice(0).sort((a, b) => b.points - a.points);
+    const numberOfBattlesPlayed = resultsSorted.length;
+    const numberOfBattlesMissed = battles.length - numberOfBattlesPlayed;
+    const numberOfLevsToNotCalculate = Math.max(0, numberOfLevsToSkip - numberOfBattlesMissed);
+
+    // Remove worst results based on numberOfLevsToSkip
+    const resultsToCalculatePoints = resultsSorted.slice(0, resultsSorted.length - numberOfLevsToNotCalculate);
+
+    // Calculate points
+    player.points = resultsToCalculatePoints.reduce((points, battle) => {
+      return points + battle.points;
+    }, 0);
+
+    // Calculate points for all battles
+    player.pointsAll = resultsSorted.reduce((points, battle) => {
+      return points + battle.points;
+    }, 0);
+
+    player.played = resultsSorted.length;
+    player.numberOfLevsCalculated = resultsToCalculatePoints.length;
   });
 
   return players.sort((a, b) => b.points - a.points);

@@ -13,7 +13,8 @@ Template.tournamentsRanking.helpers({
 
     return !battleId ? this.ranking : createRanking({
       battles: [Battles.findOne(battleId)],
-      calculationsType: this.calculationsType
+      calculationsType: this.calculationsType,
+      numberOfLevsToSkip: this.numberOfLevsToSkip,
     });
   },
   isFirstIndex(index) {
@@ -23,8 +24,10 @@ Template.tournamentsRanking.helpers({
     return FlowRouter.getQueryParam('battle') === battleId;
   },
   getActiveBattle() {
-    console.log(Battles.findOne(FlowRouter.getQueryParam('battle')));
     return Battles.findOne(FlowRouter.getQueryParam('battle'));
+  },
+  getResultTime(player) {
+    return player.results[0].time;
   },
   isInfoAboutBattle(battle) {
     return battle.inqueue || battle.aborted || battle.finished || battle.results;

@@ -32,7 +32,8 @@ Meteor.startup(() => {
                       Tournaments.update(tournament._id, { $set: {
                         ranking: createRanking({
                           battles: Battles.find({"_id": { "$in": tournament.battles }}).fetch(),
-                          calculationsType: tournament.calculationsType
+                          calculationsType: tournament.calculationsType,
+                          numberOfLevsToSkip: tournament.numberOfLevsToSkip
                         }),
                         status: ifTournamentHasUnfinishedBattle ? 'in progress': 'finished'
                       }});

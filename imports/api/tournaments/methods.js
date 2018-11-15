@@ -6,7 +6,7 @@ import { Battles } from '/imports/api/battles/battles.js';
 import { Tournaments } from './tournaments.js';
 
 Meteor.methods({
-  'tournaments.insert'({ title, description, battles, author, startingDate, calculationsType }) {
+  'tournaments.insert'({ title, description, battles, author, startingDate, calculationsType, numberOfLevsToSkip }) {
     // check(url, String);
     // check(title, String);
 
@@ -19,6 +19,7 @@ Meteor.methods({
         author,
         startingDate,
         calculationsType,
+        numberOfLevsToSkip,
         battles: battlesAdded,
         status: 'queued',
         createdAt: new Date(),

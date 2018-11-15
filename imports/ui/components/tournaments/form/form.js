@@ -19,7 +19,7 @@ Template.tournamentsForm.events({
     event.preventDefault();
 
     // Get value from form element
-    const { title, description, author, startingDate, calculationsType } = event.target;
+    const { title, description, author, startingDate, calculationsType, numberOfLevsToSkip } = event.target;
 
     Meteor.call('tournaments.insert', {
       title: title.value,
@@ -28,6 +28,7 @@ Template.tournamentsForm.events({
       startingDate: startingDate.value,
       battles: template.data.battles.get(),
       calculationsType: calculationsType.value,
+      numberOfLevsToSkip: numberOfLevsToSkip.value,
       createdAt: new Date(),
     }, (error, result) => {
       if(!error) {

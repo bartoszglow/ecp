@@ -1,3 +1,3 @@
-import '/imports/ui/components/countdown/countdown.js';
+import '/imports/ui/components/welcome/welcome.js';
 
 import './home.html';

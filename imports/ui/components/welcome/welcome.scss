@@ -1,26 +1,34 @@
-.ect__countdown {
+.ect__welcome {
   height: 100%;
   width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
 }
 
-.ect__countdown-container {
+.ect__welcome-container {
   height: 260px;
   width: 100%;
   text-align: center;
 }
 
-.ect__coundown-title-colored {
+.ect__welcome-title {
+  font-size: 60px;
+  margin: 0 0 30px;
+}
+
+.ect__welcome-title-colored {
   color: #31a3c3;
 }
 
-.ect__coundown-countdown {
+.ect__welcome-welcome {
   margin-top: 30px;
   font-size: 60px;
 }
 
-.ect__coundown-date {
+.ect__welcome-date {
   font-size: 20px;
 }

@@ -7,14 +7,14 @@ import './countdown.html';
 import './countdown.scss';
 
 Template.countdown.onCreated(function () {
-  var eventTime = 1540663200;
+  var eventTime = moment(this.data && this.data.startingDate || 1540663200);
 
-  Session.set('releaseDate', `(${moment(eventTime * 1000).format("Do MMM YYYY, HH:mm")})`);
+  Session.set('releaseDate', `(${eventTime.format("Do MMM YYYY, HH:mm")} CET)`);
 
-  Session.set('timer', countTimer());
+  Session.set('timer', countTimer(eventTime));
 
   this.timerInterval = Meteor.setInterval(() => {
-    Session.set('timer', countTimer());
+    Session.set('timer', countTimer(eventTime));
   }, 1000)
 });
 
@@ -31,10 +31,10 @@ Template.countdown.onDestroyed(function () {
   Meteor.clearInterval(this.timerInterval);
 });
 
-const countTimer = function() {
-  const eventTime = 1540663200;
-  const currentTime = moment().unix();
-  const diffTime = eventTime - currentTime;
+const countTimer = function(eventTime) {
+  const eventTimeUnix = eventTime.unix();
+  const currentTimeUnix = moment().unix();
+  const diffTime = eventTimeUnix - currentTimeUnix;
   const duration = moment.duration(diffTime * 1000, 'milliseconds');
   const interval = 1000;
 

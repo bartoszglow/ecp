@@ -1,0 +1,12 @@
+<template name="welcome">
+  <div class="ect__welcome">
+    <div class="ect__welcome-container">
+      <h1 class="ect__welcome-title">EOL CUP <span class="ect__welcome-title-colored">. PRO</span></h1>
+      <h2 class="ect__welcome-welcome">STARTED!</h2>
+      <h2 class="ect__welcome-date">Please check tournaments list!</h2>
+      {{#unless currentUser}}
+        <p class="text-center">To create your own tournament please <a href="/login">log in</a>.</p>
+      {{/unless}}
+    </div>
+  </div>
+</template>

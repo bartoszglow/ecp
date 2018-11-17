@@ -1,5 +1,15 @@
 <template name="App_tournament">
-  {{> tournamentsInfo tournament}}
-  {{> tournamentsPlayers tournament}}
-  {{> tournamentsRanking tournament}}
+  {{#if isOwnTournament tournament}}
+    <h1 class="text-center" style="margin-bottom: 30px">Edit your tournament</h1>
+    {{> tournamentsForm tournament}}
+  {{else}}
+    {{> tournamentsInfo tournament}}
+    {{> tournamentsPlayers tournament}}
+  {{/if}}
+
+  {{#if isTournamentQueued tournament}}
+    {{> countdown tournament}}
+  {{else}}
+    {{> tournamentsRanking tournament}}
+  {{/if}}
 </template>

@@ -1,13 +1,22 @@
 .ect__countdown {
-  height: 100%;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+
+  &.size-1 {
+    .ect__coundown-title {
+      font-size: 1.5rem;
+    }
+
+    .ect__coundown-countdown {
+      margin-top: 10px;
+      font-size: 40px;
+    }
+  }
 }
 
 .ect__countdown-container {
-  height: 260px;
   width: 100%;
   text-align: center;
 }

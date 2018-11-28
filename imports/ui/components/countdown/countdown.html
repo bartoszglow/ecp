@@ -1,7 +1,7 @@
 <template name="countdown">
-  <div class="ect__countdown">
+  <div class="ect__countdown size-{{size}}">
     <div class="ect__countdown-container">
-      <h2 class="ect__coundown-subtitle">Tournament starts in:</h2>
+      {{#if title}}<h2 class="ect__coundown-title">{{title}}</h2>{{/if}}
       <h2 class="ect__coundown-countdown">{{countdown}}</h2>
       <h2 class="ect__coundown-date">{{releaseDate}}</h2>
     </div>

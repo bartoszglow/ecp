@@ -1,29 +1,39 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
+import { ReactiveVar } from 'meteor/reactive-var'
 import moment from 'moment';
 
 import './countdown.html';
 import './countdown.scss';
 
 Template.countdown.onCreated(function () {
-  var eventTime = moment(this.data && this.data.startingDate || 1540663200);
+  const eventTime = moment(moment(this.data.date).unix() * 1000);
 
-  Session.set('releaseDate', `(${eventTime.format("Do MMM YYYY, HH:mm")} CET)`);
+  this.data.releaseDate = new ReactiveVar(`(${eventTime.format("Do MMM YYYY, HH:mm")} CET)`);
 
-  Session.set('timer', countTimer(eventTime));
+  this.data.timer = new ReactiveVar(countTimer(eventTime));
 
   this.timerInterval = Meteor.setInterval(() => {
-    Session.set('timer', countTimer(eventTime));
-  }, 1000)
+    this.data.timer.set(countTimer(eventTime));
+  }, 1000);
 });
 
 Template.countdown.helpers({
   countdown() {
-    return Session.get('timer');
+    if(!this.timer) {
+      const eventTime = moment(moment(this.date).unix() * 1000);
+      this.releaseDate = new ReactiveVar(`(${eventTime.format("Do MMM YYYY, HH:mm")} CET)`);
+      this.timer = new ReactiveVar(countTimer(eventTime));
+    }
+    return this.timer.get('timer');
   },
   releaseDate() {
-    return Session.get('releaseDate');
+    if(!this.releaseDate) {
+      const eventTime = moment(moment(this.date).unix() * 1000);
+      this.releaseDate = new ReactiveVar(`(${eventTime.format("Do MMM YYYY, HH:mm")} CET)`);
+    }
+    return this.releaseDate.get();
   }
 });
 

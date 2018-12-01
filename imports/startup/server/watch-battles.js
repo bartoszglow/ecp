@@ -11,7 +11,6 @@ Meteor.startup(() => {
       const activeTournaments = allTournaments && allTournaments.filter(tournament => tournament.status !== 'finished');
       const tournamentBattlesIds = activeTournaments && activeTournaments.map((torunament => torunament.battles));
       const tournamentBattles = tournamentBattlesIds && [].concat.apply([], tournamentBattlesIds).map(battleId => Battles.findOne(battleId));
-      const tournamentsToCalculatePoints = [];
 
       if(tournamentBattles) {
         tournamentBattles.forEach(tournamentBattle => {
@@ -22,18 +21,28 @@ Meteor.startup(() => {
                   if(results) {
                     Battles.update(tournamentBattle._id, { $set: Object.assign({}, battle, { results }) });
 
-                    const tournament = Tournaments.findOne(tournamentBattle.tournamentId);
+                    const tournament = activeTournaments.find(tournament => {
+                      return tournament.battles.find(battle => battle === tournamentBattle._id)
+                    });
 
                     if(tournament) {
-                      const battlesToCheck = Battles.find({ tournamentId: tournament._id }).fetch();
+                      const battlesToCheck = tournament.battles.map(battle => Battles.findOne(battle));
 
                       const ifTournamentHasUnfinishedBattle = battlesToCheck.filter(battle => !battle.results || battle.results.error).length > 0;
 
                       Tournaments.update(tournament._id, { $set: {
                         ranking: createRanking({
-                          battles: Battles.find({"_id": { "$in": tournament.battles }}).fetch(),
+                          battles: tournament.battles.map(battleId => Battles.findOne(battleId)),
                           calculationsType: tournament.calculationsType,
-                          numberOfLevsToSkip: tournament.numberOfLevsToSkip
+                          numberOfLevsToSkip: tournament.numberOfLevsToSkip,
+                          numberOfBattlesInTournament: tournament.battles.length
+                        }),
+                        rankingSelected: createRanking({
+                          battles: tournament.battles.map(battleId => Battles.findOne(battleId)),
+                          calculationsType: tournament.calculationsType,
+                          numberOfLevsToSkip: tournament.numberOfLevsToSkip,
+                          numberOfBattlesInTournament: tournament.battles.length,
+                          players: tournament.players
                         }),
                         status: ifTournamentHasUnfinishedBattle ? 'in progress': 'finished'
                       }});
@@ -50,5 +59,6 @@ Meteor.startup(() => {
 });
 
 const compareBattles = (battle1, battle2) => {
-  return battle1.levelName && battle2.levelname && (battle1.levelName.toLowerCase() === battle2.levelname.toLowerCase())
+  return (battle1.levelName && battle2.level && battle1.levelName == battle2.level) ||
+         (battle2.levelname && battle2.levelname.toLowerCase && (battle1.levelName.toLowerCase() === battle2.levelname.toLowerCase()));
 }

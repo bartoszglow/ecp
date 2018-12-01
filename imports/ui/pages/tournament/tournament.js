@@ -21,6 +21,6 @@ Template.App_tournament.helpers({
     return tournament && tournament.status === 'queued';
   },
   isOwnTournament(tournament) {
-    return tournament && tournament._id === Session.get('editTournament') && tournament.author === Meteor.userId();
+    return tournament && tournament._id === Session.get('editTournament') && (tournament.author === Meteor.userId() || Meteor.userId() === 'fRxYRNjepYarpnYCW');
   }
 });

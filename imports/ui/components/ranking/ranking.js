@@ -10,11 +10,12 @@ Template.tournamentsRanking.onCreated(function () {
 Template.tournamentsRanking.helpers({
   players() {
     const battleId = FlowRouter.getQueryParam('battle');
+    const isAllPlayersRanking = Session.get('isAllPlayersRanking');
 
-    return !battleId ? this.ranking : createRanking({
+    return !battleId ? (isAllPlayersRanking ? this.ranking : this.rankingSelected) : createRanking({
       battles: [Battles.findOne(battleId)],
       calculationsType: this.calculationsType,
-      numberOfLevsToSkip: this.numberOfLevsToSkip,
+      isAllPlayersRanking
     });
   },
   isFirstIndex(index) {

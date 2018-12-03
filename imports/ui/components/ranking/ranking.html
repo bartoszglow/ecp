@@ -29,10 +29,11 @@
       <thead>
         <tr>
           <th scope="col" style="width: 5%">#</th>
-          <th scope="col" style="width: 30%; text-align: center;">Kuski</th>
-          <th scope="col" style="width: 30%; text-align: center;">Points</th>
+          <th scope="col" style="width: 25%; text-align: center;">Kuski</th>
+          <th scope="col" style="width: 25%; text-align: center;">Points</th>
           {{#unless activeBattle}}
-            <th scope="col" style="width: 15%">Calc levs</th>
+            <th scope="col" style="width: 15%">Ranking levs</th>
+            <th scope="col" style="width: 10%">Won levs</th>
             <th scope="col" style="width: 10%">Played levs</th>
             <th scope="col" style="width: 10%">All points</th>
           {{/unless}}
@@ -42,11 +43,12 @@
       <tbody>
         {{#each players}}
           <tr>
-            <td>{{inc @index}}</td>
+            <td>{{position}}</td>
             <td style="text-align: center;">{{name}}</td>
             {{#unless activeBattle}}
               <td style="text-align: center;">{{points}}</td>
               <td>{{numberOfLevsCalculated}}</td>
+              <td>{{numberOfWins}}</td>
               <td>{{played}}</td>
               <td>{{pointsAll}}</td>
             {{/unless}}

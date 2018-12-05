@@ -1,57 +1,61 @@
 <template name="tournamentsForm">
-    <form class="new-tournament">
+    <form class="tournament-form">
         <div class="jumbotron">
             <h3>Tournament info</h3>
             <div class="form-group">
                 <label>Title</label>
-                <input type="text" class="form-control" name="title" placeholder="Title" required />
+                <input type="text" class="form-control" name="title" value={{title}} placeholder="Title" required />
             </div>
             <div class="form-group">
                 <label>Description</label>
-                <textarea type="text" class="form-control" name="description" placeholder="My best tournament ever!" rows="3" required></textarea> 
+                <textarea type="text" class="form-control" name="description" value={{description}} placeholder="My best tournament ever!" rows="3" required></textarea> 
             </div>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label>Author</label>
-                        <input type="text" class="form-control" name="author" placeholder="kuski" required />
+                        <label>Starting date<br><small>format: "rrrr-mm-ddThh:mm", eg. "2018-11-16T20:00"</small></label>
+                        <input type="string" class="form-control" name="startingDate" value={{startingDate}} placeholder="starting date" />
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label>Starting date (format: "dd.mm.rrrr, --:--")</label>
-                        <input type="datetime-local" class="form-control" name="startingDate" placeholder="starting date" required />
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Tournament points calculation algorithm</label>
+                        <label>
+                          <span>Tournament points calculation algorithm</span>
+                          <br>
+                          <small>CUP: 1st: 100, 2nd: 85, 3rd: 75, 4th: 70, 5th: 65 ...</small>
+                          <br>
+                          <small>BATTLE: 1st: n+1, 2nd: n-1, 3rd: n-2, 4th: n-3 ... nth: 1</small>
+                        </label>
                         <select class="form-control" name="calculationsType">
-                            <option value="battle">battle</option>
-                            <option value="cup">cup</option>
+                            <option value="battle" selected={{isCalculationType 'battle'}}>battle</option>
+                            <option value="cup" selected={{isCalculationType 'cup'}}>cup</option>
                         </select>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
-                        <label>Number of worst levs to not count in final results</label>
-                        <input type="number" min="0" max="10" class="form-control" name="numberOfLevsToSkip" placeholder="0" required />
+                        <label># of worst levs to not count in final results</label>
+                        <input type="number" min="0" max="100" class="form-control" name="numberOfLevsToSkip" value={{numberOfLevsToSkip}} required />
                     </div>
                 </div>
             </div>
 
             <hr class="my-4">
-            <h3> Battles (level names) </h3>
+            <h3>Battles</h3>
+            <label>You can put here battles by passing your level name or level index (which can be found in elmaonline.net, even for locked levels)</label>
             <ul class="list-group">
                 {{#each battles}}
-                    <li class="list-group-item ecp__battle-input">
-                        <input type="text" class="input-battles form-control" name="battle-{{@index}}" data-index={{@index}} value={{this}} />
-                        <button class="btn btn-danger" data-index={{@index}}>-</button>
-                    </li>
+                    {{#if name}}
+                        <li class="list-group-item ecp__battle-input">
+                            {{#if id}}
+                                <input type="text" class="input-battles form-control" name="battle-{{@index}}" data-index={{@index}} value={{name}} disabled/>
+                            {{else}}
+                                <input type="text" class="input-battles form-control" name="battle-{{@index}}" data-index={{@index}} value={{name}}>
+                            {{/if}}
+                            <button class="btn btn-danger delete-battle" data-index={{@index}}>-</button>
+                        </li>
+                    {{/if}}
                 {{/each}}
                 <li class="list-group-item">
                     <div style="margin-left: 40%; width: 20%; margin-top: 20px;">
@@ -59,9 +63,38 @@
                     </div>
                 </li>
             </ul>
-            <div style="margin-left: 40%; width: 20%; margin-top: 40px;">
-                <button type="submit" class="btn btn-primary btn-block">Submit tournament</button>
-            </div>
+
+            <hr class="my-4">
+            <h3>Players</h3>
+            <label>If you put kuskis here you will have 2 rankings. First ranking with all players and second ranking containing only selected players.</label>
+            <ul class="list-group">
+                {{#each players}}
+                    <li class="list-group-item ecp__battle-input">
+                        <input type="text" class="input-players form-control" name="player-{{@index}}" data-index={{@index}} value={{this}}>
+                        <button class="btn btn-danger delete-player" data-index={{@index}}>-</button>
+                    </li>
+                {{/each}}
+                <li class="list-group-item">
+                    <div style="margin-left: 40%; width: 20%; margin-top: 20px;">
+                        <a class="btn btn-success btn-block add-player" href="#" role="button">Add kuski</a>
+                    </div>
+                </li>
+            </ul>
+
+            {{#if isOwnTournament}}
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-md-4 offset-3">
+                        <button type="submit" class="btn btn-primary btn-block">Update tournament</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-warning btn-block tournament-form-cancel">Cancel</button>
+                    </div>
+                </div>
+            {{else}}
+                <div style="margin-left: 40%; width: 20%; margin-top: 40px;">
+                    <button type="submit" class="btn btn-primary btn-block">Submit tournament</button>
+                </div>
+            {{/if}}
         </div>
     </form>
 </template>

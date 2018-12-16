@@ -1,7 +1,6 @@
 <template name="tournamentsList">
   <div class="ecp__tournaments-list">
-    <h1 class="text-center">Tournaments list</h1>
-
+    <h1 class="text-center" style="margin-top: 20px;">Tournaments in progress</h1>
     <table class="table table-dark" style="margin: 30px 0;">
       <thead>
         <tr>
@@ -16,11 +15,11 @@
         </tr>
       </thead>
       <tbody>
-        {{#each tournaments}}
+        {{#each inprogressTournaments}}
           <tr class="ecp__tournament-row" data-tournament-id={{_id}}>
             <td>{{inc @index}}</td>
             <td>{{title}}</td>
-            <td>{{author}}</td>
+            <td>{{getAuthorById author}}</td>
             <td>{{getNumberOfPlayers this}}</td>
             <td>{{getNumberOfBattles this}}</td>
             <td>{{getLeader this}}</td>
@@ -30,8 +29,69 @@
         {{/each}}
       </tbody>
     </table>
-    <div style="margin-left: 40%; width: 20%;">
-      <button class="btn btn-primary btn-block ecp__tournament-create">Create tournament</button>
+
+    <h1 class="text-center" style="margin: 60px 0 30px">Incoming tournaments</h1>
+    <div class="row">
+        {{#each queuedTournaments}}
+            <div class="col-md-12">
+                <div class="jumbotron">
+                    <div class="row">
+                        <div class="col-md-8" style="border-right: 2px solid rgba(255, 255, 255, 0.22);">
+                            <h3 class="display-4 tournament-author">{{title}}<br><small>by {{getAuthorById author}}</small></h3>
+                            <hr class="my-4">
+                            <p class="lead" style="white-space: pre-wrap;">{{description}}</p>
+                        </div>
+                        <div class="col-md-4">
+                            {{> countdown date=startingDate title="Tournament starts in:" size="1" }}
+                            <hr class="my-4">
+                            <div style="margin-left: 10%; width: 80%;">
+                                <button class="btn btn-primary btn-block open-tournament" data-id="{{_id}}">Check tournament details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
     </div>
+
+    <h1 class="text-center" style="margin-top: 40px;">Finished Tournaments</h1>
+    <table class="table table-dark" style="margin: 30px 0;">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Author</th>
+          <th scope="col">Players</th>
+          <th scope="col">Battles</th>
+          <th scope="col">Leader</th>
+          <th scope="col">Status</th>
+          <th scope="col">Starting date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each finishedTournaments}}
+          <tr class="ecp__tournament-row" data-tournament-id={{_id}}>
+            <td>{{inc @index}}</td>
+            <td>{{title}}</td>
+            <td>{{getAuthorById author}}</td>
+            <td>{{getNumberOfPlayers this}}</td>
+            <td>{{getNumberOfBattles this}}</td>
+            <td>{{getLeader this}}</td>
+            <td>{{status}}</td>
+            <td>{{formatDate startingDate}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    {{#if currentUser}}
+      <div style="margin-left: 40%; width: 20%; margin-top: 50px;">
+        <button class="btn btn-primary btn-block ecp__tournament-create" style="padding: 10px; font-size: 20px;">Create tournament</button>
+      </div>
+    {{else}}
+      <div style="margin-left: 30%; width: 40%; margin-top: 50px;">
+        <p class="text-center">To create tournament please <a href="/login">log in</a></p>
+      </div>
+    {{/if}}
   </div>
 </template>

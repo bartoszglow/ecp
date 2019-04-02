@@ -7,7 +7,6 @@ import { Tournaments } from './tournaments.js';
 
 Meteor.methods({
   'tournaments.insert'({ title, description, battles, players, author, startingDate, calculationsType, numberOfLevsToSkip }) {
-
     if(title && description && battles) {
       const battlesAdded = battles.map(({ name }) => Battles.insert({ levelName: name }));
 
@@ -27,9 +26,6 @@ Meteor.methods({
       return tournament;
     }
   },
-});
-
-Meteor.methods({
   'tournaments.update'({ id, battlesIds, title, description, battles, players, author, startingDate, calculationsType, numberOfLevsToSkip, status }) {
     if(title && description && battles) {
       // If there is battle without id - then battle has to be created
@@ -96,4 +92,25 @@ Meteor.methods({
       return tournament;
     }
   },
+  'tournament.calculateRanking'({ tournament }) {
+    const battlesToCheck = tournament.battles.map(battle => Battles.findOne(battle));
+    const ifTournamentHasUnfinishedBattle = battlesToCheck.filter(battle => !battle.results || battle.results.error).length > 0;
+
+    Tournaments.update(tournament._id, { $set: {
+      ranking: createRanking({
+        battles: tournament.battles.map(battleId => Battles.findOne(battleId)),
+        calculationsType: tournament.calculationsType,
+        numberOfLevsToSkip: tournament.numberOfLevsToSkip,
+        numberOfBattlesInTournament: tournament.battles.length
+      }),
+      rankingSelected: createRanking({
+        battles: tournament.battles.map(battleId => Battles.findOne(battleId)),
+        calculationsType: tournament.calculationsType,
+        numberOfLevsToSkip: tournament.numberOfLevsToSkip,
+        numberOfBattlesInTournament: tournament.battles.length,
+        players: tournament.players
+      }),
+      status: ifTournamentHasUnfinishedBattle ? 'in progress': 'finished'
+    }});
+  }
 });

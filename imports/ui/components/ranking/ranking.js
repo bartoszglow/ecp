@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Battles } from '/imports/api/battles/battles.js';
 import createRanking from '/imports/utils/ranking.js';
 import './ranking.html';
+import './ranking.scss';
 
 Template.tournamentsRanking.onCreated(function () {
   Meteor.subscribe('battles.all');
@@ -33,10 +34,22 @@ Template.tournamentsRanking.helpers({
   isInfoAboutBattle(battle) {
     return battle.inqueue || battle.aborted || battle.finished || battle.results;
   },
+  isOwnTournament() {
+    return this.author === Meteor.userId() || Meteor.userId() === 'fRxYRNjepYarpnYCW';
+  },
   getBattleStatus(battle) {
     if(battle.inqueue) return 'queued';
     if(battle.aborted) return 'aborted';
     if(battle.finished) return 'finished';
     if(battle.results) return 'in progress';
+  }
+});
+
+Template.tournamentsRanking.events({
+  'click .reload-ranking'(event) {
+    event.preventDefault();
+    const battleId = FlowRouter.getQueryParam('battle');
+
+    Meteor.call('battle.fetchResults', { battleId });
   }
 });

@@ -19,34 +19,7 @@ Meteor.startup(() => {
               if(compareBattles(tournamentBattle, battle)) {
                 fetchBattleResults(battle.index).then((results) => {
                   if(results) {
-                    Battles.update(tournamentBattle._id, { $set: Object.assign({}, battle, { results }) });
-
-                    const tournament = activeTournaments.find(tournament => {
-                      return tournament.battles.find(battle => battle === tournamentBattle._id)
-                    });
-
-                    if(tournament) {
-                      const battlesToCheck = tournament.battles.map(battle => Battles.findOne(battle));
-
-                      const ifTournamentHasUnfinishedBattle = battlesToCheck.filter(battle => !battle.results || battle.results.error).length > 0;
-
-                      Tournaments.update(tournament._id, { $set: {
-                        ranking: createRanking({
-                          battles: tournament.battles.map(battleId => Battles.findOne(battleId)),
-                          calculationsType: tournament.calculationsType,
-                          numberOfLevsToSkip: tournament.numberOfLevsToSkip,
-                          numberOfBattlesInTournament: tournament.battles.length
-                        }),
-                        rankingSelected: createRanking({
-                          battles: tournament.battles.map(battleId => Battles.findOne(battleId)),
-                          calculationsType: tournament.calculationsType,
-                          numberOfLevsToSkip: tournament.numberOfLevsToSkip,
-                          numberOfBattlesInTournament: tournament.battles.length,
-                          players: tournament.players
-                        }),
-                        status: ifTournamentHasUnfinishedBattle ? 'in progress': 'finished'
-                      }});
-                    }
+                    Meteor.call('battle.updateResults', { battleId: tournamentBattle._id, results })
                   }
                 });
               }

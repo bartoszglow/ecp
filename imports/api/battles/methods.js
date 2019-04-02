@@ -13,8 +13,7 @@ Meteor.methods({
       createdAt: new Date(),
     });
   },
-  'battle.updateResults'({ battleId, results }) {
-    const battle = Battles.findOne(battleId);
+  'battle.update'({ battleId, battle, results }) {
     const battleAdded = Battles.update(battleId, { $set: Object.assign({}, battle, { results }) });
     const tournaments = Tournaments.find().fetch().filter(tournament => tournament.battles.find(tournamentBattle => tournamentBattle === battleId))
 
@@ -29,7 +28,7 @@ Meteor.methods({
     
     fetchBattleResults(battle.index).then((results) => {
       if(results) {
-        Meteor.call('battle.updateResults', { battleId: battle._id, results })
+        Meteor.call('battle.update', { battleId, battle, results })
       }
     });
   }

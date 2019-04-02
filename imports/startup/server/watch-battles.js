@@ -19,7 +19,7 @@ Meteor.startup(() => {
               if(compareBattles(tournamentBattle, battle)) {
                 fetchBattleResults(battle.index).then((results) => {
                   if(results) {
-                    Meteor.call('battle.updateResults', { battleId: tournamentBattle._id, results })
+                    Meteor.call('battle.update', { battleId: tournamentBattle._id, battle, results })
                   }
                 });
               }

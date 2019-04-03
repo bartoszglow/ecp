@@ -31,5 +31,27 @@ Meteor.methods({
         Meteor.call('battle.update', { battleId, battle, results })
       }
     });
+  },
+  'battle.updatePlayerPosition'({ battleId, positionFrom, positionTo }) {
+    const results = Battles.findOne(battleId).results;
+
+    const resultFrom = results[positionFrom];
+    const resultTo = results[positionTo];
+
+    resultFrom.number = positionTo;
+    resultTo.number = positionFrom;
+
+    results[positionFrom] = resultTo;
+    results[positionTo] = resultFrom;
+
+    Battles.update(battleId, { $set: { results } });
+
+    const tournaments = Tournaments.find().fetch().filter(tournament => tournament.battles.find(tournamentBattle => tournamentBattle === battleId))
+
+    tournaments.forEach(tournament => {
+      Meteor.call('tournament.calculateRanking', {
+        tournament: tournament
+      });
+    });
   }
 });

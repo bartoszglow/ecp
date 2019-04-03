@@ -28,24 +28,29 @@
     <table class="table table-dark">
       <thead>
         <tr>
-          <th scope="col" style="width: 5%">#</th>
-          <th scope="col" style="width: 25%; text-align: center;">Kuski</th>
-          <th scope="col" style="width: 25%; text-align: center;">Points</th>
           {{#unless activeBattle}}
+            <th scope="col" style="width: 5%">#</th>
+            <th scope="col" style="width: 25%; text-align: center;">Kuski</th>
+            <th scope="col" style="width: 25%; text-align: center;">Points</th>
             <th scope="col" style="width: 15%">Ranking levs</th>
             <th scope="col" style="width: 10%">Won levs</th>
             <th scope="col" style="width: 10%">Played levs</th>
             <th scope="col" style="width: 10%">All points</th>
           {{/unless}}
-          {{#if activeBattle}}<th scope="col" style="width: 30%; padding-left: 10%;">Time</th>{{/if}}
+          {{#if activeBattle}}
+            <th scope="col" style="width: 15%">#</th>
+            <th scope="col" style="width: 25%; text-align: center;">Kuski</th>
+            <th scope="col" style="width: 25%; text-align: center;">Points</th>
+            <th scope="col" style="width: 30%; padding-left: 10%;">Time</th>
+          {{/if}}
         </tr>
       </thead>
       <tbody>
         {{#each players}}
           <tr>
-            <td>{{position}}</td>
-            <td style="text-align: center;">{{name}}</td>
             {{#unless activeBattle}}
+              <td>{{position}}</td>
+              <td style="text-align: center;">{{name}}</td>
               <td style="text-align: center;">{{points}}</td>
               <td>{{numberOfLevsCalculated}}</td>
               <td>{{numberOfWins}}</td>
@@ -53,6 +58,14 @@
               <td>{{pointsAll}}</td>
             {{/unless}}
             {{#if activeBattle}}
+              <td>
+                {{position}}
+                {{#if isOwnTournament}}
+                  {{#if previousHasSameScore position}}<i class="fa fa-arrow-up move-player-up" style="margin-left: 10px; cursor: pointer"></i>{{/if}}
+                  {{#if nextHasSameScore position}}<i class="fa fa-arrow-down move-player-down" style="margin-left: 10px; cursor: pointer"></i>{{/if}}
+                {{/if}}
+              </td>
+              <td style="text-align: center;">{{name}}</td>
               <td style="text-align: center;">{{pointsAll}}</td>
               <td style="padding-left: 10%;">
                 {{#if isFirstIndex @index}}

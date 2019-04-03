@@ -28,7 +28,7 @@ Meteor.startup(() => {
         });
       };
     });
-  }, 5000);
+  }, 1000);
 });
 
 const compareBattles = (battle1, battle2) => {

@@ -6,7 +6,7 @@ import createRanking from '/imports/utils/ranking.js';
 import { Tournaments } from './tournaments.js';
 
 Meteor.methods({
-  'tournaments.insert'({ title, description, battles, players, author, startingDate, calculationsType, numberOfLevsToSkip }) {
+  'tournaments.insert'({ title, description, battles, players, author, startingDate, startingTimezone, calculationsType, numberOfLevsToSkip }) {
     if(title && description && battles) {
       const battlesAdded = battles.map(({ name }) => Battles.insert({ levelName: name }));
 
@@ -15,6 +15,7 @@ Meteor.methods({
         description,
         author,
         startingDate,
+        startingTimezone,
         calculationsType,
         numberOfLevsToSkip,
         battles: battlesAdded,
@@ -26,7 +27,7 @@ Meteor.methods({
       return tournament;
     }
   },
-  'tournaments.update'({ id, battlesIds, title, description, battles, players, author, startingDate, calculationsType, numberOfLevsToSkip, status }) {
+  'tournaments.update'({ id, battlesIds, title, description, battles, players, author, startingDate, startingTimezone, calculationsType, numberOfLevsToSkip, status }) {
     if(title && description && battles) {
       // If there is battle without id - then battle has to be created
       const battlesAdded = battles.filter(({ id }) => !id).map(({ name }) => Battles.insert({ levelName: name }));
@@ -69,6 +70,7 @@ Meteor.methods({
         description,
         author,
         startingDate,
+        startingTimezone,
         calculationsType,
         numberOfLevsToSkip,
         status: tournamentStatus,

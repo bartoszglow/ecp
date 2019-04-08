@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveVar } from 'meteor/reactive-var'
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Session } from 'meteor/session';
+import moment from 'moment';
+import 'moment-timezone';
 
 import { Battles } from '/imports/api/battles/battles.js';
 
@@ -39,6 +41,9 @@ Template.tournamentsForm.helpers({
   },
   isCalculationType(type) {
     return this.calculationsType === type;
+  },
+  timeZone() {
+    return moment.tz.guess();
   }
 });
 
@@ -56,6 +61,7 @@ Template.tournamentsForm.events({
         description: description.value,
         author: Meteor.userId(),
         startingDate: startingDate.value,
+        startingTimezone: moment.tz.guess(),
         battles: template.data.battles.get(),
         players: template.data.players.get(),
         calculationsType: calculationsType.value,

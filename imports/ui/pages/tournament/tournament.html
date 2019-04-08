@@ -8,7 +8,7 @@
   {{/if}}
 
   {{#if isTournamentQueued tournament}}
-    {{> countdown date=tournament.startingDate title="Tournament starts in:" size="2" }}
+    {{> countdown date=tournament.startingDate timezone=tournament.startingTimezone title="Tournament starts in:" size="2" }}
   {{else}}
     {{> tournamentsRanking tournament}}
   {{/if}}

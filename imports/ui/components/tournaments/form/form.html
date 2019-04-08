@@ -8,13 +8,13 @@
             </div>
             <div class="form-group">
                 <label>Description</label>
-                <textarea type="text" class="form-control" name="description" value={{description}} placeholder="My best tournament ever!" rows="3" required></textarea> 
+                <textarea type="text" class="form-control" name="description" value={{description}} placeholder="My best tournament ever!" rows="5" required></textarea> 
             </div>
 
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>Starting date<br><small>format: "rrrr-mm-ddThh:mm", eg. "2018-11-16T20:00"</small></label>
+                        <label>Starting date<br><small>timezone: {{timeZone}}<br>format: "rrrr-mm-ddThh:mm", eg. "2018-11-16T20:00"</small></label>
                         <input type="string" class="form-control" name="startingDate" value={{startingDate}} placeholder="starting date" />
                     </div>
                 </div>
